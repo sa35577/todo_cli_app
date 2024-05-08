@@ -4,7 +4,7 @@
 from pathlib import Path
 from typing import Any, Dict, List, NamedTuple
 
-from rptodo import DB_READ_ERROR
+from rptodo import DB_READ_ERROR, ID_ERROR
 from rptodo.database import DatabaseHandler
 
 class CurrentTodo(NamedTuple):
@@ -31,3 +31,19 @@ class Todoer:
         read.todo_list.append(todo)
         write = self._db_handler.write_todos(read.todo_list)
         return CurrentTodo(todo, write.error)
+
+    def get_todo_list(self) -> List[Dict[str, Any]]:
+        """List all to-dos from the database."""
+        return self._db_handler.read_todos().todo_list
+    
+    def set_done(self, todo_id: int) -> CurrentTodo:
+        """Set the to-do as done."""
+        read = self._db_handler.read_todos()
+        if read.error:
+            return CurrentTodo({}, read.error)
+        try:
+            read.todo_list[todo_id - 1]["Done"] = True
+        except IndexError:
+            return CurrentTodo({}, ID_ERROR)
+        write = self._db_handler.write_todos(read.todo_list)
+        return CurrentTodo(read.todo_list[todo_id - 1], write.error)
