@@ -9,6 +9,8 @@ source myenv/build/activate
 ```
 and you should be in your virtual environment, named `venv`.
 
+**TODO**: Update README with instructions for Linux & Windows.
+
 3. Install dependencies in the virtual environment. Run the following command (inside the virtual environment):
 
 ```
@@ -19,10 +21,11 @@ And now you should be good to go!
 
 Here are the basic functionalities that this app supports:
 
-
-
 ```
 
 ```
 
-**TODO:** Update README
+**TODO:** Update README with functions
+
+
+Credit for this project and a lot of the code (to help me learn all of this) to the following tutorial: https://realpython.com/python-typer-cli
