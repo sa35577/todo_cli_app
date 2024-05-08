@@ -27,12 +27,12 @@ def init_database(db_path: Path) -> int:
         return DB_WRITE_ERROR
     
 class DBResponse(NamedTuple):
-    data: List[Dict[str, Any]]
+    todo_list: List[Dict[str, Any]]
     error: int
 
 class DatabaseHandler:
     def __init__(self, db_path: Path) -> None:
-        self.db_path = db_path
+        self._db_path = db_path
     
     def read_todos(self) -> DBResponse:
         """Read the to-dos from the database."""
@@ -45,7 +45,7 @@ class DatabaseHandler:
         except OSError:
             return DBResponse([], DB_READ_ERROR)
         
-    def write_todoss(self, todo_list: List[Dict[str, Any]]) -> DBResponse:
+    def write_todos(self, todo_list: List[Dict[str, Any]]) -> DBResponse:
         """Write the to-dos to the database."""
         try:
             with self._db_path.open("w") as db:
